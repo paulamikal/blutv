@@ -1,0 +1,30 @@
+# Build folders
+Debug/
+Release/
+
+# Tizen
+.buildResult/
+.sign/
+.settings/
+
+# Certificates (NO subir nunca)
+*.p12
+*.pfx
+*.pem
+
+# VS Code
+.vscode/
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# macOS
+.DS_Store

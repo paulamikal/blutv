@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets"
+        xmlns:tizen="http://tizen.org/ns/widgets"
+        id="http://yourdomain/blutv"
+        version="0.2.1"
+        viewmodes="maximized">
+
+   <name>BluTV</name>
+
+   <icon src="icon.png"/>
+   <content src="index.html"/>
+
+   <feature name="http://tizen.org/feature/screen.size.normal.1080.1920"/>
+
+   <tizen:setting
+      screen-orientation="landscape"
+      context-menu="enable"
+      background-support="disable"
+      encryption="disable"
+      install-location="auto"
+      hwkey-event="enable"/>
+
+   <tizen:application
+      id="5bNFWr6P9n.BluTV"
+      package="5bNFWr6P9n"
+      required_version="2.3"/>
+
+   <tizen:privilege name="http://tizen.org/privilege/application.launch"/>
+   <tizen:privilege name="http://tizen.org/privilege/internet"/>
+
+   <tizen:metadata
+      key="http://samsung.com/tv/metadata/prelaunch.support"
+      value="true"/>
+
+   <tizen:metadata
+      key="http://tizen.org/metadata/app_ui_type/base_screen_resolution"
+      value="extensive"/>
+
+   <tizen:profile name="tv-samsung"/>
+   <access origin="*" subdomains="true"/>
+</widget>
