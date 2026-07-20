@@ -26,8 +26,10 @@ const Home = {
             <nav class="home-menu" id="homeMenu"></nav>
 
             <div class="home-hint-bar">
-                <span><span class="home-key">←</span><span class="home-key">→</span> mover</span>
-                <span><span class="home-key">⏎</span> entrar</span>
+                <span>
+                    <span class="home-key">◀</span><span class="home-key">▶</span><span class="home-key">▲</span><span class="home-key">▼</span> mover
+                </span>
+                <span><span class="home-key home-key-ok">OK</span> seleccionar</span>
             </div>
         </div>
         `;

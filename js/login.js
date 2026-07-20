@@ -46,7 +46,7 @@ const Login = {
             const el = document.getElementById(id);
             if (!el) return;
             el.classList.toggle("active", i === this.focusIndex);
-            if (i === this.focusIndex && el.tagName === "INPUT") {
+            if (i === this.focusIndex) {
                 el.focus();
             }
         });

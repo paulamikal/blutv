@@ -9,7 +9,9 @@ const MoviesCatalog = {
         try {
             const movies = await API.getVodStreams(this.categoryId);
             this.moviesData = movies || [];
-            this.selectedMovie = 0;
+            if (this.selectedMovie >= this.moviesData.length) {
+                this.selectedMovie = 0;
+            }
             this.buildGrid();
         } catch (e) {
             console.log("INIT MOVIES CATALOG ERROR", e);

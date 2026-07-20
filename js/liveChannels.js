@@ -127,7 +127,7 @@ const LiveChannels = {
         this.stopPreview();
         const url = `${creds.server}/live/${creds.username}/${creds.password}/${ch.stream_id}.ts`;
         Player.init();
-        Player.play(url, ch.name, "live");
+        Player.play(url, ch.name, "live", "live-channels");
     },
 
     handleKey: function (key) {

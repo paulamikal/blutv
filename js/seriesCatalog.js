@@ -9,7 +9,9 @@ const SeriesCatalog = {
         try {
             const series = await API.getSeries(this.categoryId);
             this.seriesData = series || [];
-            this.selectedSeries = 0;
+            if (this.selectedSeries >= this.seriesData.length) {
+                this.selectedSeries = 0;
+            }
             this.buildGrid();
         } catch (e) {
             console.log("INIT SERIES CATALOG ERROR", e);

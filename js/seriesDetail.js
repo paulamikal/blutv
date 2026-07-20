@@ -2,11 +2,11 @@ const SeriesDetail = {
     currentItem: null,
     seasons: [],
     episodesBySeason: {},
-    viewMode: "seasons",       // "seasons" | "episodes"
+    viewMode: "seasons",
     selectedSeasonIndex: 0,
     selectedEpisodeIndex: 0,
     currentSeasonNumber: null,
-    focus: "actions",          // "actions" | "list"
+    focus: "actions",
 
     render: function () {
         const item = this.currentItem;
@@ -18,7 +18,9 @@ const SeriesDetail = {
             <img class="detail-poster" src="${item.cover || ""}" />
             <div class="detail-info">
                 <h2>${item.name}</h2>
+                <div class="detail-meta" id="detailMeta"></div>
                 <p id="detail-plot">${item.plot || "Cargando descripción..."}</p>
+                <p class="detail-cast" id="detailCast"></p>
                 <button id="btnPlay">▶ Reproducir</button>
                 <h3 id="list-title" style="margin-top:24px;">Temporadas</h3>
                 <div id="season-episode-list"></div>
@@ -34,7 +36,10 @@ const SeriesDetail = {
         this.selectedEpisodeIndex = 0;
 
         const btn = document.getElementById("btnPlay");
-        if (btn) btn.onclick = () => this.playDefault();
+        if (btn) {
+            btn.onclick = () => this.playDefault();
+            btn.classList.add("active");
+        }
 
         this.loadInfo();
     },
@@ -45,9 +50,13 @@ const SeriesDetail = {
         try {
             const data = await API.getSeriesInfo(item.series_id);
 
-            const plot = data?.info?.plot || item.plot;
+            const info = data?.info || {};
+            const plot = info.plot || item.plot;
             const plotEl = document.getElementById("detail-plot");
             if (plotEl) plotEl.innerText = plot || "Sin descripción disponible.";
+
+            this.renderMeta(info);
+            this.renderCast(info);
 
             this.seasons = data?.seasons || [];
             this.episodesBySeason = data?.episodes || {};
@@ -60,7 +69,44 @@ const SeriesDetail = {
         }
     },
 
+    renderMeta: function (info) {
+        const el = document.getElementById("detailMeta");
+        if (!el) return;
+        const parts = [];
+
+        const mins = parseInt(info.episode_run_time, 10);
+        if (mins > 0) parts.push(`<span class="detail-meta-item">${mins} min / episodio</span>`);
+
+        const stars = parseFloat(info.rating_5based);
+        if (stars > 0) {
+            parts.push(`<span class="detail-meta-item detail-stars">${this.starsHTML(stars)}</span>`);
+        }
+
+        if (info.genre) parts.push(`<span class="detail-meta-item">${info.genre}</span>`);
+
+        el.innerHTML = parts.join('<span class="detail-meta-dot">•</span>');
+    },
+
+    renderCast: function (info) {
+        const el = document.getElementById("detailCast");
+        if (!el) return;
+        if (info.cast) {
+            el.innerHTML = `<strong>Reparto:</strong> ${info.cast}`;
+            el.style.display = "block";
+        } else {
+            el.style.display = "none";
+        }
+    },
+
+    starsHTML: function (rating0to5) {
+        const n = Math.max(0, Math.min(5, Math.round(rating0to5)));
+        return "★".repeat(n) + "☆".repeat(5 - n);
+    },
+
     renderList: function () {
+        const btn = document.getElementById("btnPlay");
+        if (btn) btn.classList.toggle("active", this.focus === "actions");
+
         const container = document.getElementById("season-episode-list");
         const title = document.getElementById("list-title");
         if (!container) return;
@@ -115,7 +161,7 @@ const SeriesDetail = {
         const ext = ep.container_extension || "mp4";
         const url = `${creds.server}/series/${creds.username}/${creds.password}/${ep.id}.${ext}`;
         Player.init();
-        Player.play(url, this.currentItem?.name || "Serie", "vod");
+        Player.play(url, this.currentItem?.name || "Serie", "vod", "series-detail");
     },
 
     handleKey: function (key) {
@@ -131,7 +177,7 @@ const SeriesDetail = {
                 break;
         }
     },
-    
+
     moveDown: function () {
         if (this.focus === "actions") {
             this.focus = "list";

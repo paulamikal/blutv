@@ -1,6 +1,7 @@
 const Router = {
     routes: {},
     currentRoute: null,
+    navToken: 0,
 
     init() {
         window.addEventListener(
@@ -26,12 +27,17 @@ const Router = {
         const path =
             location.hash.replace("#", "") || "login";
 
+        if (typeof Player !== "undefined") {
+            Player.forceStopAll();
+        }
+
         if (this.currentRoute && this.currentRoute !== path) {
             AppState.history.push(this.currentRoute);
         }
         AppState.screen = path;
-
         this.currentRoute = path;
+
+        const myToken = ++this.navToken;
 
         const view = this.routes[path];
         const app = document.getElementById("app");
@@ -44,8 +50,12 @@ const Router = {
 
         if (view.afterRender)
             view.afterRender();
-        if (view.init)
-            view.init();
+
+        if (view.init) {
+            Promise.resolve(view.init(myToken)).catch((e) =>
+                console.log("ROUTER INIT ERROR", e)
+            );
+        }
     }
 };
 window.Router = Router;

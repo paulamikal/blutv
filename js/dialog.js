@@ -35,6 +35,10 @@ const Dialog = {
     },
 
     show: function ({ title = "", message = "", buttons = [] }) {
+        if (this.keyHandler) {
+            document.removeEventListener("keydown", this.keyHandler);
+            this.keyHandler = null;
+        }
         AppState.dialogOpen = true;
         this.buttons = buttons;
         this.selectedIndex = 0;

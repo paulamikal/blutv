@@ -3,9 +3,10 @@ const Live = {
     selectedCategory: 0,
     columns: 3,
 
-    init: async function () {
+    init: async function (token) {
         try {
             const cats = await API.getLiveCategories();
+            if (token !== Router.navToken) return;
             this.categories = cats || [];
             if (this.selectedCategory >= this.categories.length) {
                 this.selectedCategory = 0;
@@ -33,6 +34,7 @@ const Live = {
 
     buildGrid: function () {
         const el = document.getElementById("catGrid");
+        if (!el) return;
         el.innerHTML = "";
         this.categories.forEach((cat, i) => {
             const div = document.createElement("div");

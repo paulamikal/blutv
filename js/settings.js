@@ -13,7 +13,7 @@ const Settings = {
             </div>
             <div class="settings-body">
                 <div class="menu" id="settingsMenu"></div>
-                <p class="settings-version">BluTV v0.1.0 (beta)</p>
+                <p class="settings-version">BluTV v1.0.0</p>
             </div>
         </div>
         `;
