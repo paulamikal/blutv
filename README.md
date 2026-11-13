@@ -52,7 +52,7 @@ BluTV es compatible con **Samsung Smart TVs** que ejecuten **Tizen 2.3 o superio
 
 Probado en:
 
-* Samsung Smart TV Serie KU (2016)
+* Samsung Smart TV QLED Q8F (2025)
 
 ---
 
