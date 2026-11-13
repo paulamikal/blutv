@@ -48,7 +48,7 @@ El proyecto fue desarrollado como una aplicación nativa para **Samsung Tizen**,
 
 ## Compatibilidad
 
-BluTV es compatible con **Samsung Smart TVs** que ejecuten **Tizen 2.3 o superior**.
+BluTV es compatible con **Samsung Smart TVs** que ejecuten **Tizen 9.0 o superior**.
 
 Probado en:
 
